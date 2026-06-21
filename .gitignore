@@ -25,3 +25,4 @@ Thumbs.db
 wechat_output/
 .lark2wechat_assets/
 *.tmp
+*.stackdump
