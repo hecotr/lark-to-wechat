@@ -77,6 +77,28 @@ def _section(content, style_str):
     return f'<section style="{style_str}">{content}</section>'
 
 
+def _highlight_code(code, lang):
+    """代码语法高亮 → 微信兼容 span。
+
+    用 pygments（nowrap + noclasses：只输出带 inline style 的 span，无 <pre>/<div>）；
+    无 pygments 时降级为纯文本 + <br/> 换行。
+    """
+    try:
+        from pygments import highlight
+        from pygments.lexers import get_lexer_by_name
+        from pygments.formatters import HtmlFormatter
+        from pygments.util import ClassNotFound
+        try:
+            lexer = get_lexer_by_name(lang or "text", stripnl=False)
+        except ClassNotFound:
+            lexer = get_lexer_by_name("text", stripnl=False)
+        out = highlight(code, lexer,
+                        HtmlFormatter(noclasses=True, nowrap=True, style="default"))
+        return out.rstrip("\n").replace("\n", "<br/>")
+    except ImportError:
+        return html.escape(code, quote=False).replace("\n", "<br/>")
+
+
 def render_block(block, style=None):
     style = style or DEFAULT_STYLE
     f = style["font"]; hf = style.get("heading_font", f); tc = style["text_color"]; bs = style["text_size"]; lh = style["line_height"]
@@ -167,7 +189,7 @@ def render_block(block, style=None):
 
     if block["type"] == "code":
         # 微信不吃 <pre> 的 white-space，多行代码会塌成一行 → 用 <br/> 显式换行
-        content = block["content"].replace("\n", "<br/>")
+        content = _highlight_code(block["content"], block.get("lang", ""))
         return _section(
             f'<section style="margin:12px 0;padding:10px 12px;background-color:{style["code_bg"]};border-radius:4px;">'
             f'<section style="margin:0;font-size:13px;line-height:1.6;'

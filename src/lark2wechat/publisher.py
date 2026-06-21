@@ -73,3 +73,21 @@ def add_draft(token: str, title: str, content: str, thumb_media_id: str, digest:
     data = r.json()
     _check(data, "新增草稿")
     return data["media_id"]
+
+
+def list_drafts(token: str, offset: int = 0, count: int = 20) -> dict:
+    """获取草稿列表（no_content=1 不返回正文，省流量）。返回 {total_count, item_count, item:[...]}。"""
+    r = httpx.post(f"{BASE}/draft/batchget", params={"access_token": token},
+                   json={"offset": offset, "count": count, "no_content": 1}, timeout=30)
+    data = r.json()
+    _check(data, "获取草稿列表")
+    return data
+
+
+def delete_draft(token: str, media_id: str) -> bool:
+    """删除草稿（按 media_id）。"""
+    r = httpx.post(f"{BASE}/draft/delete", params={"access_token": token},
+                   json={"media_id": media_id}, timeout=30)
+    data = r.json()
+    _check(data, "删除草稿")
+    return True

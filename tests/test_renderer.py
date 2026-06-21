@@ -66,8 +66,10 @@ def test_ordered_list():
 
 def test_code_block():
     html = r({"type": "code", "lang": "python", "content": "print(1)"})
-    assert "print(1)" in html
-    # 多行代码块应用 <br/> 换行（微信不吃 <pre> 的 white-space）
+    assert "print" in html and "1" in html
+    # 语法高亮：pygments 给 token 加 inline style（微信兼容 span）
+    assert 'style="color:' in html
+    # 多行代码块用 <br/> 换行（微信不吃 <pre> 的 white-space）
     multi = r({"type": "code", "lang": "python", "content": "a\nb"})
     assert "<br/>" in multi
 

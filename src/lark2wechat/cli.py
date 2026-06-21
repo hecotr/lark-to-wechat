@@ -85,9 +85,17 @@ def render(md_file, theme, output):
 
 @main.command()
 @click.argument("url")
-def fetch(url):
+@click.option("-o", "--output", type=click.Path(), help="输出 markdown 路径（默认 stdout）")
+def fetch(url, output):
     """只取数：飞书文档 → markdown（调试用）。"""
-    click.echo(f"fetch {url} — 待 Phase 3 实现")
+    from pathlib import Path
+    from .fetcher import fetch_document
+    md = fetch_document(url)
+    if output:
+        Path(output).write_text(md, encoding="utf-8")
+        click.echo(f"已生成：{output}")
+    else:
+        click.echo(md)
 
 
 @main.group(name="themes")
@@ -105,6 +113,41 @@ def themes_list():
         except Exception:
             desc = ""
         click.echo(f"  {name:<12} {desc}")
+
+
+@main.group(name="drafts")
+def drafts():
+    """草稿箱管理（列出 / 删除）。"""
+
+
+@drafts.command(name="list")
+def drafts_list():
+    """列出公众号草稿箱。"""
+    from .config import load_config
+    from .publisher import get_access_token, list_drafts
+    cfg = load_config()
+    cfg.require_wechat()
+    token = get_access_token(cfg.wechat_app_id, cfg.wechat_app_secret)
+    data = list_drafts(token)
+    click.echo(f"共 {data.get('total_count', 0)} 篇，本页 {data.get('item_count', 0)} 篇：")
+    for it in data.get("item", []):
+        mid = it.get("media_id", "")
+        news = it.get("content", {}).get("news_item", [{}])
+        title = news[0].get("title", "(无标题)") if news else "(无标题)"
+        click.echo(f"  {mid[:24]:<26} {title[:40]}")
+
+
+@drafts.command(name="delete")
+@click.argument("media_id")
+def drafts_delete(media_id):
+    """删除指定草稿（按 media_id，见 drafts list）。"""
+    from .config import load_config
+    from .publisher import get_access_token, delete_draft
+    cfg = load_config()
+    cfg.require_wechat()
+    token = get_access_token(cfg.wechat_app_id, cfg.wechat_app_secret)
+    delete_draft(token, media_id)
+    click.echo(f"已删除草稿 {media_id}")
 
 
 if __name__ == "__main__":

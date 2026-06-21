@@ -11,12 +11,21 @@ license = { text = "MIT" }
 requires-python = ">=3.10"
 authors = [{ name = "chao" }]
 keywords = ["feishu", "lark", "wechat", "mp", "publisher", "markdown"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Text Processing :: Markup :: Markdown",
+]
 dependencies = [
     "click>=8.1",
     "pyyaml>=6.0",
     "Pillow>=10.0",
     "httpx>=0.27",
     "python-dotenv>=1.0",
+    "pygments>=2.15",
 ]
 
 [project.optional-dependencies]
