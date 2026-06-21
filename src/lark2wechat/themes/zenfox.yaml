@@ -26,8 +26,8 @@ quote:
   color: "#4a4a45"
 code:
   block_bg: "#272822"
-  inline_bg: "#2d2d3a"
-  inline_color: "#79c0ff"
+  inline_bg: "#ededed"
+  inline_color: "#007aaa"
   text_color: "#f8f8f2"
   syntax_style: "monokai"
 table:
