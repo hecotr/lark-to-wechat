@@ -26,7 +26,7 @@ def main():
 
 @main.command()
 @click.argument("url")
-@click.option("--theme", default="default", help="排版主题（见 themes list）")
+@click.option("--theme", default="zenfox", help="排版主题（见 themes list）")
 @click.option("--cover", type=click.Path(exists=True), help="封面图本地路径")
 @click.option("--auto-cover", is_flag=True, help="无封面时自动生成")
 @click.option("--digest", help="文章摘要（默认取正文前 54 字）")
@@ -54,7 +54,7 @@ def publish(url, theme, cover, auto_cover, digest, dry_run):
 
 @main.command()
 @click.argument("md_file", type=click.Path(exists=True))
-@click.option("--theme", default="default", help="排版主题")
+@click.option("--theme", default="zenfox", help="排版主题")
 @click.option("-o", "--output", type=click.Path(), help="输出 HTML 路径（默认 stdout）")
 def render(md_file, theme, output):
     """只渲染：markdown 文件 → 微信预览 HTML。"""

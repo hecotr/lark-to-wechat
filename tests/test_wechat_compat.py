@@ -44,7 +44,7 @@ def test_all_block_types_render_wechat_compatible():
     from lark2wechat.renderer import render_block
     from lark2wechat.themes import get_style
 
-    style = get_style("default")
+    style = get_style("zenfox")
     blocks = [
         {"type": "heading", "level": 1, "text": "标题一"},
         {"type": "heading", "level": 2, "text": "标题二"},

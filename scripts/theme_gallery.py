@@ -119,7 +119,7 @@ def render_card(name, is_new):
 
 
 def main():
-    names = [("default", False)] + [(n, True) for n in NEW_THEMES]
+    names = [(n, True) for n in NEW_THEMES]
     cards = "\n".join(render_card(n, new) for n, new in names)
     count = len(NEW_THEMES)
 
@@ -170,7 +170,7 @@ body {{ margin:0; padding:0; background-color:#ececec;
     out = Path(__file__).resolve().parents[1] / "demos" / "theme-gallery.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page, encoding="utf-8")
-    print(f"OK -> {out}  ({count + 1} themes)")
+    print(f"OK -> {out}  ({count} themes)")
 
 
 if __name__ == "__main__":

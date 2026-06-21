@@ -17,14 +17,14 @@ description: 飞书文档一键发布到微信公众号草稿箱。当用户给�
 ## 命令
 
 ```bash
-lark2wechat publish <飞书链接> --theme default [--cover x.jpg|--auto-cover] [--digest "..."]
-lark2wechat publish <飞书链接> --theme default --dry-run       # 只渲染预览，不发布
-lark2wechat render  <md文件>   --theme default                  # markdown → 预览 HTML
+lark2wechat publish <飞书链接> --theme zenfox [--cover x.jpg|--auto-cover] [--digest "..."]
+lark2wechat publish <飞书链接> --theme zenfox --dry-run       # 只渲染预览，不发布（默认主题）
+lark2wechat render  <md文件>   --theme zenfox                  # markdown → 预览 HTML
 lark2wechat fetch   <飞书链接>                                   # 飞书 → markdown（调试）
 lark2wechat themes list                                         # 列出主题
 ```
 
-主题（`themes list` 查看）：`default`（零装饰）/ `clean`（极简白）/ `brand`（暖橙品牌）/ `warm`（暖色出版·衬线标题×无衬线正文）/ `zenfox`（赛博禅心实样·暖灰墨+砖红强调+红色色条）/ `feishu`（飞书文档阅读视图·飞书蓝+高亮块）。
+主题（`themes list` 查看，默认 `zenfox`）：`zenfox`（默认·暖灰墨正文+砖红衬线标题+橘红强调+红色色条）/ `warm`（暖色出版·衬线标题×无衬线正文）/ `feishu`（飞书文档阅读视图·飞书蓝+高亮块）。
 
 ## 流程
 

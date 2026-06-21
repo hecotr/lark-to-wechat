@@ -7,21 +7,21 @@ from lark2wechat.themes import list_themes, load_theme, get_style, validate_them
 
 def test_list_themes_includes_builtins():
     names = list_themes()
-    assert "default" in names
-    assert "clean" in names
-    assert "brand" in names
-    assert len(names) >= 3
+    assert "warm" in names
+    assert "zenfox" in names
+    assert "feishu" in names
+    assert len(names) == 3
 
 
-def test_load_default():
-    data = load_theme("default")
-    assert data["name"] == "default"
+def test_load_zenfox():
+    data = load_theme("zenfox")
+    assert data["name"] == "zenfox"
     assert data["base"]["text_size"] == "15px"
 
 
 def test_get_style_flat_keys():
-    style = get_style("default")
-    for k in ("font", "text_color", "text_size", "line_height",
+    style = get_style("zenfox")
+    for k in ("font", "heading_font", "text_color", "text_size", "line_height",
               "primary", "heading_color", "h1_size", "h1_weight",
               "table_border", "code_bg", "callout_border", "quote_color"):
         assert k in style, f"missing key {k}"
@@ -55,14 +55,13 @@ def test_all_builtin_themes_valid_and_renderable():
         assert "标题" in html
 
 
-def test_brand_theme_changes_color():
-    """不同主题应产出不同数值。"""
-    default = get_style("default")
-    brand = get_style("brand")
-    assert default["primary"] != brand["primary"]
-    assert default["heading_color"] != brand["heading_color"]
+def test_themes_have_distinct_colors():
+    """不同主题应产出不同强调色。"""
+    zenfox = get_style("zenfox")
+    warm = get_style("warm")
+    assert zenfox["primary"] != warm["primary"]
 
 
 def test_theme_to_style_weight_string():
-    style = theme_to_style(load_theme("default"))
+    style = theme_to_style(load_theme("zenfox"))
     assert isinstance(style["h1_weight"], str)

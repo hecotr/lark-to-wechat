@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 class Config:
     wechat_app_id: str = ""
     wechat_app_secret: str = ""
-    default_theme: str = "default"
+    default_theme: str = "zenfox"
 
     def require_wechat(self):
         """发布前校验微信凭证齐全。"""
@@ -46,5 +46,5 @@ def load_config(env_file=None) -> Config:
     return Config(
         wechat_app_id=os.getenv("WECHAT_APP_ID", ""),
         wechat_app_secret=os.getenv("WECHAT_APP_SECRET", ""),
-        default_theme=os.getenv("LARK2WECHAT_DEFAULT_THEME", "default"),
+        default_theme=os.getenv("LARK2WECHAT_DEFAULT_THEME", "zenfox"),
     )
