@@ -1,0 +1,12 @@
+path=C:\Users\chaol\AppData\Roaming\npm\lark-cli.CMD
+cmd1=C:\Users\chaol\AppData\Roaming\npm\lark-cli.CMD --version
+[shell=True] rc=1
+[shell=True] OUT:
+[shell=True] ERR:'"node"' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+
+[shell=False] rc=1
+[shell=False] OUT:
+[shell=False] ERR:'"node"' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+

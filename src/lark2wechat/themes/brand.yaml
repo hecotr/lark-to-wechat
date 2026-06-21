@@ -1,0 +1,28 @@
+name: brand
+meta:
+  description: 暖色品牌，琥珀橙强调，温润有质感
+base:
+  font_family: "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif"
+  text_color: "#3d2e26"
+  text_size: 15px
+  line_height: 1.95
+heading:
+  color: "#7a3e12"
+  h1: { size: 23px, weight: 700 }
+  h2: { size: 19px, weight: 700 }
+  h3: { size: 16px, weight: 600 }
+accent:
+  primary: "#c8651b"
+  highlight: "#e08a3c"
+callout:
+  border_color: "#e0a878"
+quote:
+  border_color: "#e0a878"
+  color: "#8a5a32"
+code:
+  block_bg: "#fbf4ee"
+  inline_bg: "#f3e4d6"
+  text_color: "#5a3a1e"
+table:
+  border: "#e8d5c4"
+  header_bg: "#fbf4ee"

@@ -1,0 +1,28 @@
+name: clean
+meta:
+  description: 极简白，大留白，浅灰中性，阅读优先
+base:
+  font_family: "-apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', sans-serif"
+  text_color: "#2b2b2b"
+  text_size: 15px
+  line_height: 1.9
+heading:
+  color: "#111111"
+  h1: { size: 24px, weight: 700 }
+  h2: { size: 19px, weight: 600 }
+  h3: { size: 16px, weight: 600 }
+accent:
+  primary: "#3a3a3a"
+  highlight: "#888888"
+callout:
+  border_color: "#dcdcdc"
+quote:
+  border_color: "#dcdcdc"
+  color: "#777777"
+code:
+  block_bg: "#fafafa"
+  inline_bg: "#eeeeee"
+  text_color: "#2b2b2b"
+table:
+  border: "#e5e5e5"
+  header_bg: "#fafafa"

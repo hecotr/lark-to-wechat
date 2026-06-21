@@ -1,0 +1,28 @@
+name: default
+meta:
+  description: 零装饰内容驱动，靠字号字重分层级（微信蓝链接）
+base:
+  font_family: "-apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, sans-serif"
+  text_color: "#333333"
+  text_size: 15px
+  line_height: 2em
+heading:
+  color: "#1a1a1a"
+  h1: { size: 22px, weight: 700 }
+  h2: { size: 18px, weight: 700 }
+  h3: { size: 16px, weight: 600 }
+accent:
+  primary: "#576b95"
+  highlight: "#576b95"
+callout:
+  border_color: "#e0e0e0"
+quote:
+  border_color: "#d0d0d0"
+  color: "#666666"
+code:
+  block_bg: "#f7f7f7"
+  inline_bg: "#f0f0f0"
+  text_color: "#333333"
+table:
+  border: "#e0e0e0"
+  header_bg: "#f7f7f7"
