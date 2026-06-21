@@ -35,14 +35,31 @@ def get_access_token(app_id: str, app_secret: str) -> str:
     return data["access_token"]
 
 
-def upload_image(token: str, image_path: str) -> str:
-    """正文图片 → uploadimg → 微信域名 URL。"""
+def upload_image(token: str, image_path: str, retries: int = 3) -> str:
+    """正文图片 → uploadimg → 微信域名 URL。网络抖动自动重试（3 次线性退避）。"""
+    import os
+    import time
+    ext = os.path.splitext(image_path)[1].lower() or ".jpg"
+    mime = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png"}.get(ext, "image/jpeg")
     with open(image_path, "rb") as f:
-        r = httpx.post(f"{BASE}/media/uploadimg", params={"access_token": token},
-                       files={"media": f}, timeout=60)
-    data = r.json()
-    _check(data, "上传正文图片")
-    return data["url"]
+        blob = f.read()
+    last = None
+    for i in range(retries):
+        try:
+            r = httpx.post(f"{BASE}/media/uploadimg", params={"access_token": token},
+                           files={"media": (f"image{ext}", blob, mime)}, timeout=60)
+            data = r.json()
+            if data.get("url"):
+                return data["url"]
+            last = data
+            if data.get("errcode") in (40001, 40125):
+                break  # 凭证错误，重试无意义
+        except Exception as e:
+            last = e
+        if i < retries - 1:
+            time.sleep(1 * (i + 1))
+    _check(last if isinstance(last, dict) else {}, "上传正文图片")
+    raise RuntimeError(f"上传正文图片失败（已重试 {retries} 次）：{last}")
 
 
 def add_material(token: str, image_path: str) -> str:
@@ -90,4 +107,19 @@ def delete_draft(token: str, media_id: str) -> bool:
                    json={"media_id": media_id}, timeout=30)
     data = r.json()
     _check(data, "删除草稿")
+    return True
+
+
+def update_draft(token: str, media_id: str, title: str, content: str,
+                 thumb_media_id: str, digest: str = "") -> bool:
+    """更新草稿（覆盖 index=0 的文章，不新增）。"""
+    r = httpx.post(f"{BASE}/draft/update", params={"access_token": token}, json={
+        "media_id": media_id, "index": 0,
+        "articles": {"title": title, "author": "", "digest": digest,
+                     "content": content, "content_source": "",
+                     "thumb_media_id": thumb_media_id,
+                     "need_open_comment": 0, "only_fans_can_comment": 0}
+    }, timeout=30)
+    data = r.json()
+    _check(data, "更新草稿")
     return True

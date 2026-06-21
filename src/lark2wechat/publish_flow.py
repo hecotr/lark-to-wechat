@@ -29,6 +29,27 @@ def extract_digest(blocks, limit=54):
     return text.strip()[:limit]
 
 
+def _precheck(body, title):
+    """发布前预检：标题/正文非空、图片全上传（无占位）。失败抛可操作错误。"""
+    if not title.strip():
+        raise RuntimeError("文章标题为空，无法发布。")
+    if not body.strip():
+        raise RuntimeError("正文为空，无法发布。")
+    if "[图片占位]" in body:
+        raise RuntimeError("正文含未上传的图片占位（画板/图片导出失败）。检查 lark-cli 授权或重试。")
+    if "lark2wechat://" in body:
+        raise RuntimeError("正文含未替换的图片 src（上传失败）。")
+
+
+def _record(title, theme, media_id, updated=False):
+    """记录发布到本地历史（失败静默，不影响发布）。"""
+    try:
+        from .history import record_publish
+        record_publish(title, theme, media_id, updated=updated)
+    except Exception:
+        pass
+
+
 def _hex(c):
     return c if c.startswith("#") else "#" + c
 
@@ -80,7 +101,7 @@ def _resolve_cover(cover, auto_flag, title, style, assets):
     raise RuntimeError("缺少封面。请用 --cover <path> 指定，或加 --auto-cover 自动生成。")
 
 
-def publish(url, theme, cover, auto_cover, digest, dry_run, cfg, assets_dir=None):
+def publish(url, theme, cover, auto_cover, digest, dry_run, cfg, assets_dir=None, update_id=None):
     """端到端发布。返回 dict：dry_run 时含 html；否则含 media_id。"""
     from .fetcher import fetch_document, export_whiteboard, download_media
     from .parser import parse_feishu_markdown
@@ -88,7 +109,7 @@ def publish(url, theme, cover, auto_cover, digest, dry_run, cfg, assets_dir=None
     from .renderer import render_article_body, render_preview_page
     from .themes import get_style
     from .images import trim_whitespace
-    from .publisher import get_access_token, upload_image, add_material, add_draft
+    from .publisher import get_access_token, upload_image, add_material, add_draft, update_draft
     from .wechat_compat import validate_html
 
     md = fetch_document(url)
@@ -142,9 +163,16 @@ def publish(url, theme, cover, auto_cover, digest, dry_run, cfg, assets_dir=None
     for ph, path in placeholders.items():
         body = body.replace(ph, upload_image(token, path))
 
+    _precheck(body, title)
+
     cover_path = _resolve_cover(cover, auto_cover, title, style, assets)
     thumb = add_material(token, cover_path)
     if not digest:
         digest = extract_digest(blocks)
+    if update_id:
+        update_draft(token, update_id, title, body, thumb, digest)
+        _record(title, theme, update_id, updated=True)
+        return {"media_id": update_id, "updated": True, "violations": violations, "title": title}
     media_id = add_draft(token, title, body, thumb, digest)
+    _record(title, theme, media_id, updated=False)
     return {"media_id": media_id, "violations": violations, "title": title}

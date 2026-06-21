@@ -27,18 +27,33 @@ def main():
 @main.command()
 @click.argument("url")
 @click.option("--theme", default="zenfox", help="排版主题（见 themes list）")
+@click.option("-i", "--interactive", is_flag=True, help="交互式选择主题")
 @click.option("--cover", type=click.Path(exists=True), help="封面图本地路径")
 @click.option("--auto-cover", is_flag=True, help="无封面时自动生成")
 @click.option("--digest", help="文章摘要（默认取正文前 54 字）")
 @click.option("--dry-run", is_flag=True, help="只渲染不发布")
-def publish(url, theme, cover, auto_cover, digest, dry_run):
+@click.option("--update", "update_id", help="更新已有草稿 media_id（覆盖而非新增，见 drafts list）")
+def publish(url, theme, cover, auto_cover, digest, dry_run, update_id, interactive):
     """端到端：飞书文档 → 微信公众号草稿箱。"""
+    import sys
     from .config import load_config
     from . import publish_flow
+    if interactive and sys.stdin.isatty():
+        from .themes import list_themes
+        names = list_themes()
+        if names:
+            default = str(names.index(theme) + 1) if theme in names else "1"
+            for i, n in enumerate(names, 1):
+                click.echo(f"  {i}. {n}")
+            idx = click.prompt("选择主题序号", default=default, show_default=True)
+            try:
+                theme = names[int(idx) - 1]
+            except (ValueError, IndexError):
+                pass
     try:
         result = publish_flow.publish(
             url=url, theme=theme, cover=cover, auto_cover=auto_cover,
-            digest=digest, dry_run=dry_run, cfg=load_config())
+            digest=digest, dry_run=dry_run, cfg=load_config(), update_id=update_id)
     except Exception as e:
         raise click.ClickException(str(e))
     if result.get("violations"):
@@ -48,7 +63,10 @@ def publish(url, theme, cover, auto_cover, digest, dry_run):
     if result.get("dry_run"):
         click.echo(result["html"])
         return
-    click.echo(f"✅ 发布成功，草稿 media_id: {result['media_id']}")
+    if result.get("updated"):
+        click.echo(f"✅ 已更新草稿 {result['media_id']}")
+    else:
+        click.echo(f"✅ 发布成功，草稿 media_id: {result['media_id']}")
     click.echo("到 mp.weixin.qq.com → 草稿箱 审核。")
 
 
@@ -148,6 +166,21 @@ def drafts_delete(media_id):
     token = get_access_token(cfg.wechat_app_id, cfg.wechat_app_secret)
     delete_draft(token, media_id)
     click.echo(f"已删除草稿 {media_id}")
+
+
+@drafts.command(name="history")
+def drafts_history():
+    """本地发布历史（最近 20 条，含主题/media_id/时间）。"""
+    from .history import list_history
+    rows = list_history()
+    if not rows:
+        click.echo("（暂无发布历史）")
+        return
+    click.echo(f"最近 {len(rows)} 条发布：")
+    for r in reversed(rows):
+        flag = "更新" if r.get("updated") else "新增"
+        click.echo(f"  {r.get('time', '')[:16]}  [{r.get('theme', ''):>7}] {flag}  "
+                   f"{r.get('title', '')[:28]}  {r.get('media_id', '')[:20]}")
 
 
 if __name__ == "__main__":
