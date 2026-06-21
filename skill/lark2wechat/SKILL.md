@@ -24,7 +24,7 @@ lark2wechat fetch   <飞书链接>                                   # 飞书 �
 lark2wechat themes list                                         # 列出主题
 ```
 
-主题：`default`（零装饰内容驱动）/ `clean`（极简白）/ `brand`（暖橙品牌）。
+主题（`themes list` 查看）：`default`（零装饰）/ `clean`（极简白）/ `brand`（暖橙品牌）/ `warm`（暖色出版·衬线标题×无衬线正文）/ `zenfox`（赛博禅心实样·暖灰墨+砖红强调+红色色条）/ `feishu`（飞书文档阅读视图·飞书蓝+高亮块）。
 
 ## 流程
 

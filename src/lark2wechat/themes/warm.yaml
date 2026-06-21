@@ -1,0 +1,31 @@
+name: warm
+meta:
+  description: 暖色出版物，奶油纸底+赤陶橙强调+衬线标题，温润阅读感
+  source: huashu-design · Warm Editorial（中性·还原97%）
+base:
+  font_family: "'PingFang SC', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif"
+  text_color: "#2a2520"
+  background: "#f5f0e8"
+  text_size: 15px
+  line_height: 1.95
+heading:
+  font_family: "'Songti SC', 'STSong', 'Source Han Serif SC', 'Noto Serif SC', Georgia, serif"
+  color: "#1f1a16"
+  h1: { size: 23px, weight: 700 }
+  h2: { size: 19px, weight: 700 }
+  h3: { size: 16px, weight: 600 }
+accent:
+  primary: "#c2674a"
+  highlight: "#d97757"
+callout:
+  border_color: "#d9b8a0"
+quote:
+  border_color: "#d9b8a0"
+  color: "#7a5a45"
+code:
+  block_bg: "#f5efe6"
+  inline_bg: "#ece2d4"
+  text_color: "#4a3526"
+table:
+  border: "#e0d2c0"
+  header_bg: "#f5efe6"

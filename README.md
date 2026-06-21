@@ -37,7 +37,18 @@ lark2wechat themes list                                     # 列出主题
 
 ## 主题
 
-主题位于 `src/lark2wechat/themes/`，每套两个文件：`<name>.yaml`（参数）+ `<name>.md`（气质描述）。见 `themes list`。
+主题位于 `src/lark2wechat/themes/`，每套两个文件：`<name>.yaml`（参数）+ `<name>.md`（气质描述），`themes list` 查看。内置：
+
+| 主题 | 风格 | 来源 |
+|---|---|---|
+| `default` | 零装饰，字号字重分层级（微信蓝链接） | — |
+| `clean` | 极简白，大留白 | — |
+| `brand` | 暖橙品牌 | — |
+| `warm` | 暖色出版，衬线标题×无衬线正文，奶油底 | huashu-design |
+| `zenfox` | 暖灰墨正文+砖红衬线标题+橘红强调+红色色条 | 扒自公众号实样 |
+| `feishu` | 飞书文档阅读视图（飞书蓝+浅灰块+高亮块） | 飞书设计规范 |
+
+主题支持参数：正文字体/颜色/底色/行高、标题独立字体、强调色、引用与高亮块的背景+色条。生成主题画廊 demo：`python scripts/theme_gallery.py` → `demos/theme-gallery.html`。
 
 ## 状态
 

@@ -18,6 +18,7 @@ IMAGE_SOURCES = {}
 DEFAULT_STYLE = {
     "font": "-apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, sans-serif",
     "text_color": "#333333",
+    "body_bg": "#FFFFFF",
     "text_size": "15px",
     "line_height": "2em",
     "primary": "#576b95",
@@ -72,25 +73,25 @@ def _section(content, style_str):
 
 def render_block(block, style=None):
     style = style or DEFAULT_STYLE
-    f = style["font"]; tc = style["text_color"]; bs = style["text_size"]; lh = style["line_height"]
+    f = style["font"]; hf = style.get("heading_font", f); tc = style["text_color"]; bs = style["text_size"]; lh = style["line_height"]
 
     if block["type"] == "heading" and block["level"] == 1:
         return _section(_rich(block["text"], style),
             f"margin:32px 0 16px 0;padding:0;"
             f"font-size:{style['h1_size']};font-weight:{style['h1_weight']};color:{style['heading_color']};"
-            f"font-family:{f};line-height:1.5;")
+            f"font-family:{hf};line-height:1.5;")
 
     if block["type"] == "heading" and block["level"] == 2:
         return _section(_rich(block["text"], style),
             f"margin:28px 0 12px 0;padding:0;"
             f"font-size:{style['h2_size']};font-weight:{style['h2_weight']};color:{style['heading_color']};"
-            f"font-family:{f};line-height:1.5;")
+            f"font-family:{hf};line-height:1.5;")
 
     if block["type"] == "heading":
         return _section(_rich(block["text"], style),
             f"margin:20px 0 8px 0;"
             f"font-size:{style['h3_size']};font-weight:{style['h3_weight']};color:{style['heading_color']};"
-            f"font-family:{f};line-height:1.6;")
+            f"font-family:{hf};line-height:1.6;")
 
     if block["type"] == "paragraph":
         text = _rich(block["text"], style)
@@ -101,16 +102,22 @@ def render_block(block, style=None):
 
     if block["type"] == "quote":
         content = _rich(block["content"], style).replace('\n', '<br/>')
+        bg = style.get("quote_bg")
+        pad_bg = (f"background-color:{bg};border-radius:0 6px 6px 0;padding:8px 14px;"
+                  if bg else "padding:8px 0 8px 14px;")
         return _section(content,
-            f"margin:12px 0;padding:8px 0 8px 14px;"
+            f"margin:12px 0;{pad_bg}"
             f"font-size:14px;line-height:1.8;color:{style['quote_color']};font-family:{f};"
             f"border-left:3px solid {style['quote_border']};")
 
     if block["type"] == "callout":
         content = _rich(block["content"], style).replace('\n', '<br/>')
         emoji = f'<span>{block["emoji"]} </span>' if block["emoji"] else ''
+        bg = style.get("callout_bg")
+        pad_bg = (f"background-color:{bg};border-radius:0 6px 6px 0;padding:8px 14px;"
+                  if bg else "padding:8px 0 8px 12px;")
         return _section(emoji + content,
-            f"margin:12px 0;padding:8px 0 8px 12px;"
+            f"margin:12px 0;{pad_bg}"
             f"font-size:14px;line-height:1.85;color:{tc};font-family:{f};"
             f"border-left:2px solid {style['callout_border']};")
 
@@ -213,7 +220,7 @@ def render_block(block, style=None):
         return (
             f'<section style="margin:20px 0;">'
             f'<table style="width:100%;border-collapse:collapse;">'
-            f'<tr><td style="height:1px;background-color:#e0e0e0;font-size:1px;line-height:1px;">\xa0</td></tr>'
+            f'<tr><td style="height:1px;background-color:{style["table_border"]};font-size:1px;line-height:1px;">\xa0</td></tr>'
             f'</table></section>')
 
     return ""
@@ -251,7 +258,7 @@ body {{ margin: 0; padding: 0; background-color: #f5f5f5; }}
 .top-bar-inner {{ max-width: 580px; margin: 0 auto; }}
 .copy-btn {{ padding: 5px 14px; background-color: #576b95; color: #fff;
   border: none; font-size: 12px; cursor: pointer; font-family: {f}; }}
-.article {{ max-width: 580px; margin: 12px auto; background-color: #FFFFFF;
+.article {{ max-width: 580px; margin: 12px auto; background-color: {style['body_bg']};
   padding: 24px 20px; font-family: {f}; }}
 </style>
 </head>

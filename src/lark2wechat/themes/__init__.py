@@ -58,7 +58,9 @@ def theme_to_style(data):
     t = data.get("table", {}); q = data.get("quote", {})
     return {
         "font": b["font_family"],
+        "heading_font": h.get("font_family", b["font_family"]),
         "text_color": b["text_color"],
+        "body_bg": b.get("background", "#FFFFFF"),
         "text_size": b["text_size"],
         "line_height": b["line_height"],
         "primary": a["primary"],
@@ -73,7 +75,9 @@ def theme_to_style(data):
         "code_text": cd.get("text_color", "#333333"),
         "code_inline_bg": cd.get("inline_bg", "#f0f0f0"),
         "callout_border": c.get("border_color", "#e0e0e0"),
+        "callout_bg": c.get("bg"),
         "quote_border": q.get("border_color", "#d0d0d0"),
+        "quote_bg": q.get("bg"),
         "quote_color": q.get("color", "#666666"),
     }
 

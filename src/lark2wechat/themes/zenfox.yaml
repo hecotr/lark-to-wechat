@@ -1,0 +1,32 @@
+name: zenfox
+meta:
+  description: 提取自「赛博禅心」实样：暖灰墨正文+砖红衬线标题+橘红强调+红色色条，温暖活泼有人味
+  source: 实样提取 mp.weixin.qq.com/s/-7C4WqRsuKlmBj6I31Is1w（赛博禅心）
+base:
+  font_family: "'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif"
+  text_color: "#4a4a45"
+  text_size: 15px
+  line_height: 1.9
+heading:
+  font_family: "'Noto Serif SC','Songti SC',STSong,Georgia,serif"
+  color: "#cf4436"
+  h1: { size: 22px, weight: 700 }
+  h2: { size: 19px, weight: 700 }
+  h3: { size: 16px, weight: 600 }
+accent:
+  primary: "#ff6146"
+  highlight: "#cf4436"
+callout:
+  border_color: "#cf4436"
+  bg: "#f6f5f3"
+quote:
+  border_color: "#cf4436"
+  bg: "#f6f5f3"
+  color: "#4a4a45"
+code:
+  block_bg: "#f3f3f3"
+  inline_bg: "#ededed"
+  text_color: "#4a4a45"
+table:
+  border: "rgba(120,120,112,0.18)"
+  header_bg: "#f3f3f3"

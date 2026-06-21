@@ -1,0 +1,31 @@
+name: feishu
+meta:
+  description: 复刻飞书文档（Docx）阅读视图：飞书蓝+深灰文字+浅灰块底+彩色高亮块，现代克制工具感
+  source: 飞书/Lark 公开设计系统（品牌蓝#3370ff，非逐像素扒取；动态渲染无法扒 inline style）
+base:
+  font_family: "'PingFang SC','Microsoft YaHei','Helvetica Neue',-apple-system,sans-serif"
+  text_color: "#33373d"
+  text_size: 15px
+  line_height: 1.74
+heading:
+  color: "#1f2329"
+  h1: { size: 24px, weight: 700 }
+  h2: { size: 20px, weight: 700 }
+  h3: { size: 18px, weight: 600 }
+accent:
+  primary: "#3370ff"
+  highlight: "#3370ff"
+callout:
+  border_color: "#3370ff"
+  bg: "#e8f0ff"
+quote:
+  border_color: "#dee0e3"
+  bg: "#f5f6f7"
+  color: "#646a73"
+code:
+  block_bg: "#f5f6f7"
+  inline_bg: "#f2f3f5"
+  text_color: "#1f2329"
+table:
+  border: "#dee0e3"
+  header_bg: "#f7f8fa"
