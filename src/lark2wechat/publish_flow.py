@@ -46,7 +46,16 @@ def _font(size):
 
 
 def gen_cover(title, bg_color, out_path):
-    """自动生成封面：纯色底 + 居中标题。"""
+    """自动生成封面：cosmic 深空宇宙模板（HTML→Edge 截图）；playwright 缺失时降级纯色。"""
+    from .cover import render_cover
+    try:
+        return render_cover(title, out_path)
+    except Exception:
+        return _gen_cover_plain(title, bg_color, out_path)
+
+
+def _gen_cover_plain(title, bg_color, out_path):
+    """降级封面：纯色底 + 居中标题（playwright/Edge 不可用时）。"""
     from PIL import Image, ImageDraw
     img = Image.new("RGB", (900, 500), _hex(bg_color))
     draw = ImageDraw.Draw(img)
