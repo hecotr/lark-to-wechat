@@ -25,10 +25,11 @@ quote:
   bg: "#f6f5f3"
   color: "#4a4a45"
 code:
-  block_bg: "#f3f3f3"
-  inline_bg: "#ededed"
-  inline_color: "#007aaa"
-  text_color: "#4a4a45"
+  block_bg: "#272822"
+  inline_bg: "#2d2d3a"
+  inline_color: "#79c0ff"
+  text_color: "#f8f8f2"
+  syntax_style: "monokai"
 table:
   border: "rgba(120,120,112,0.18)"
   header_bg: "#f3f3f3"

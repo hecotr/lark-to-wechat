@@ -76,6 +76,7 @@ def theme_to_style(data):
         "code_text": cd.get("text_color", "#333333"),
         "code_inline_bg": cd.get("inline_bg", "#f0f0f0"),
         "inline_code_color": cd.get("inline_color"),
+        "code_syntax_style": cd.get("syntax_style"),
         "callout_border": c.get("border_color", "#e0e0e0"),
         "callout_bg": c.get("bg"),
         "quote_border": q.get("border_color", "#d0d0d0"),
