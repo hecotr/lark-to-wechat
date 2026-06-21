@@ -16,6 +16,7 @@ heading:
 accent:
   primary: "#ff6146"
   highlight: "#cf4436"
+  bold_color: "#7c3aed"
 callout:
   border_color: "#cf4436"
   bg: "#f6f5f3"
@@ -26,6 +27,7 @@ quote:
 code:
   block_bg: "#f3f3f3"
   inline_bg: "#ededed"
+  inline_color: "#007aaa"
   text_color: "#4a4a45"
 table:
   border: "rgba(120,120,112,0.18)"

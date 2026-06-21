@@ -48,7 +48,25 @@ lark2wechat themes list                                     # 列出主题
 | `zenfox` | 暖灰墨正文+砖红衬线标题+橘红强调+红色色条 | 扒自公众号实样 |
 | `feishu` | 飞书文档阅读视图（飞书蓝+浅灰块+高亮块） | 飞书设计规范 |
 
-主题支持参数：正文字体/颜色/底色/行高、标题独立字体、强调色、引用与高亮块的背景+色条。生成主题画廊 demo：`python scripts/theme_gallery.py` → `demos/theme-gallery.html`。
+主题支持参数：正文字体/颜色/底色/行高、标题独立字体、加粗/行内代码独立配色、强调色、引用与高亮块的背景+色条。
+
+### 效果预览
+
+同一篇文章用三套主题渲染（标题独立字体、代码块换行、加粗/行内代码着色）：
+
+<table>
+  <tr>
+    <td align="center"><img src="docs/img/theme-warm.png" width="200"/><br><b>warm</b></td>
+    <td align="center"><img src="docs/img/theme-zenfox.png" width="200"/><br><b>zenfox</b></td>
+    <td align="center"><img src="docs/img/theme-feishu.png" width="200"/><br><b>feishu</b></td>
+  </tr>
+</table>
+
+<details><summary>主题画廊总览（default 参照 + 三主题 + 关键色板）</summary>
+<img src="docs/img/themes-gallery.png" width="720"/>
+</details>
+
+生成画廊与截图：`python scripts/theme_gallery.py` → `demos/theme-gallery.html`；`python scripts/screenshot_themes.py` → `docs/img/`（截图需 `playwright`）。
 
 ## 状态
 

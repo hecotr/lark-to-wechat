@@ -54,9 +54,15 @@ def _rich(text, style):
 
     text = html.escape(text, quote=False)
 
-    text = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', text)
+    bold_color = style.get("bold_color")
+    bold_open = f'<strong style="color:{bold_color};">' if bold_color else '<strong>'
+    text = re.sub(r'\*\*(.*?)\*\*', bold_open + r'\1</strong>', text)
+    # 斜体：*xx* → <em>（必须在加粗之后，避免误吃 **）
+    text = re.sub(r'\*(.+?)\*', r'<em>\1</em>', text)
+    icc = style.get("inline_code_color")
+    code_clr = f"color:{icc};" if icc else ""
     text = re.sub(r'`([^`]+)`',
-        f'<code style="background-color:{style["code_inline_bg"]};padding:1px 3px;font-size:0.9em;'
+        f'<code style="{code_clr}background-color:{style["code_inline_bg"]};padding:1px 3px;font-size:0.9em;'
         f'font-family:Menlo,Monaco,Courier New,monospace;">\\1</code>', text)
     text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)',
         f'<a href="\\2" style="color:{style["primary"]};text-decoration:none;">\\1</a>', text)
@@ -160,11 +166,13 @@ def render_block(block, style=None):
         return f'<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;">{html_rows}</table>'
 
     if block["type"] == "code":
+        # 微信不吃 <pre> 的 white-space，多行代码会塌成一行 → 用 <br/> 显式换行
+        content = block["content"].replace("\n", "<br/>")
         return _section(
-            f'<section style="margin:12px 0;padding:10px 12px;background-color:{style["code_bg"]};">'
-            f'<pre style="margin:0;font-size:13px;line-height:1.6;'
+            f'<section style="margin:12px 0;padding:10px 12px;background-color:{style["code_bg"]};border-radius:4px;">'
+            f'<section style="margin:0;font-size:13px;line-height:1.6;'
             f'font-family:Menlo,Monaco,Courier New,monospace;color:{style["code_text"]};'
-            f'white-space:pre-wrap;word-wrap:break-word;">{block["content"]}</pre></section>',
+            f'word-wrap:break-word;">{content}</section></section>',
             "")
 
     if block["type"] == "equation":

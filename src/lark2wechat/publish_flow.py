@@ -73,7 +73,7 @@ def _resolve_cover(cover, auto_flag, title, style, assets):
 
 def publish(url, theme, cover, auto_cover, digest, dry_run, cfg, assets_dir=None):
     """端到端发布。返回 dict：dry_run 时含 html；否则含 media_id。"""
-    from .fetcher import fetch_document, export_whiteboard
+    from .fetcher import fetch_document, export_whiteboard, download_media
     from .parser import parse_feishu_markdown
     from . import renderer
     from .renderer import render_article_body, render_preview_page
@@ -87,11 +87,16 @@ def publish(url, theme, cover, auto_cover, digest, dry_run, cfg, assets_dir=None
     title = extract_title(blocks) or "未命名"
     style = get_style(theme)
 
+    # 正文移除作为标题的 H1（标题已作为草稿 title，正文里不再重复）
+    title_idx = next((i for i, b in enumerate(blocks)
+                      if b.get("type") == "heading" and b.get("level") == 1), -1)
+    body_blocks = (blocks[:title_idx] + blocks[title_idx + 1:]) if title_idx >= 0 else blocks
+
     # lark-cli --output 只接受相对路径（当前目录内），用固定相对目录
     assets = assets_dir or ".lark2wechat_assets"
     os.makedirs(assets, exist_ok=True)
 
-    # 导出画板 + 裁白边，用占位 src（发布时替换为微信 URL）
+    # 导出画板 + 文档图片，裁白边，用占位 src（发布时替换为微信 URL）
     placeholders = {}
     for b in blocks:
         if b["type"] == "whiteboard":
@@ -103,12 +108,22 @@ def publish(url, theme, cover, auto_cover, digest, dry_run, cfg, assets_dir=None
                 placeholders[ph] = p
             except Exception:
                 pass  # 画板失败则保留占位块
+    for b in blocks:
+        if b["type"] == "image" and b.get("token") and b["token"] not in renderer.IMAGE_SOURCES:
+            try:
+                p = download_media(b["token"], assets)
+                p = trim_whitespace(p)
+                ph = f"lark2wechat://img/{b['token']}"
+                renderer.IMAGE_SOURCES[b["token"]] = ph
+                placeholders[ph] = p
+            except Exception:
+                pass  # 图片下载失败则保留占位块
 
-    body = render_article_body(blocks, style)
+    body = render_article_body(body_blocks, style)
     violations = validate_html(body)
 
     if dry_run:
-        return {"dry_run": True, "html": render_preview_page(blocks, title, style),
+        return {"dry_run": True, "html": render_preview_page(body_blocks, title, style),
                 "violations": violations, "title": title}
 
     cfg.require_wechat()

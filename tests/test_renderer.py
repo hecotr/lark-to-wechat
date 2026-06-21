@@ -66,7 +66,10 @@ def test_ordered_list():
 
 def test_code_block():
     html = r({"type": "code", "lang": "python", "content": "print(1)"})
-    assert "<pre" in html and "print(1)" in html
+    assert "print(1)" in html
+    # 多行代码块应用 <br/> 换行（微信不吃 <pre> 的 white-space）
+    multi = r({"type": "code", "lang": "python", "content": "a\nb"})
+    assert "<br/>" in multi
 
 def test_table():
     html = r({"type": "table", "rows": [["A", "B"]], "widths": [], "has_header": True})

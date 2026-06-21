@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>好的排版，是退让的艺术</title>
+<style>
+body { margin: 0; padding: 0; background-color: #f5f5f5; }
+.top-bar { background-color: #fff; border-bottom: 1px solid #e8e8e8;
+  padding: 8px 16px; font-family: 'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif; }
+.top-bar-inner { max-width: 580px; margin: 0 auto; }
+.copy-btn { padding: 5px 14px; background-color: #576b95; color: #fff;
+  border: none; font-size: 12px; cursor: pointer; font-family: 'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif; }
+.article { max-width: 580px; margin: 12px auto; background-color: #FFFFFF;
+  padding: 24px 20px; font-family: 'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif; }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:13px;color:#333;font-weight:600;">好的排版，是退让的艺术</span>
+      <button class="copy-btn" onclick="copyArticle(this)">复制文章</button>
+    </div>
+  </div>
+</div>
+<div class="article" id="article-content">
+  <section style="margin:32px 0 16px 0;padding:0;font-size:22px;font-weight:700;color:#cf4436;font-family:'Noto Serif SC','Songti SC',STSong,Georgia,serif;line-height:1.5;">好的排版，是退让的艺术</section><section style="margin:0 0 12px 0;font-size:15px;line-height:1.9;color:#4a4a45;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">一篇公众号文章<strong style="color:#7c3aed;">最该被看见的是内容本身</strong>，不是装饰。<code style="color:#007aaa;background-color:#ededed;padding:1px 3px;font-size:0.9em;font-family:Menlo,Monaco,Courier New,monospace;">主题系统</code>的意义，是让不同的内容找到合适的<a href="https://example.com" style="color:#ff6146;text-decoration:none;">气质容器</a>。</section><section style="margin:12px 0;background-color:#f6f5f3;border-radius:0 6px 6px 0;padding:8px 14px;font-size:14px;line-height:1.8;color:#4a4a45;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;border-left:3px solid #cf4436;">少即是多，但少不等于空。—— Massimo Vignelli</section><section style="margin:28px 0 12px 0;padding:0;font-size:19px;font-weight:700;color:#cf4436;font-family:'Noto Serif SC','Songti SC',STSong,Georgia,serif;line-height:1.5;">为什么需要多套主题</section><section style="margin:0 0 12px 0;font-size:15px;line-height:1.9;color:#4a4a45;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">技术长文需要克制与密度，品牌故事需要温度，宣言需要力量。一套主题打天下，等于让所有内容穿同一件衣服。</section><section style="margin:8px 0 12px 0;"><p style="margin:2px 0;font-size:15px;line-height:1.9;color:#4a4a45;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;"><span style="margin-right:4px;">•</span>固定微信兼容骨架：inline style、系统字体、白名单标签</p><p style="margin:2px 0;font-size:15px;line-height:1.9;color:#4a4a45;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;"><span style="margin-right:4px;">•</span>参数化主题：颜色 / 字号 / 字重 / 行高 / 底色</p><p style="margin:2px 0;font-size:15px;line-height:1.9;color:#4a4a45;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;"><span style="margin-right:4px;">•</span>气质描述：每套主题配一段 DNA 说明</p></section><section style="margin:20px 0 8px 0;font-size:16px;font-weight:600;color:#cf4436;font-family:'Noto Serif SC','Songti SC',STSong,Georgia,serif;line-height:1.6;">这套系统的三件事</section><section style="margin:8px 0 12px 0;"><p style="margin:2px 0;font-size:15px;line-height:1.9;color:#4a4a45;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">1. 选择与内容气质匹配的主题</p><p style="margin:2px 0;font-size:15px;line-height:1.9;color:#4a4a45;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">2. 在飞书写好正文</p><p style="margin:2px 0;font-size:15px;line-height:1.9;color:#4a4a45;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">3. 一键发布到草稿箱</p></section><section style="margin:28px 0 12px 0;padding:0;font-size:19px;font-weight:700;color:#cf4436;font-family:'Noto Serif SC','Songti SC',STSong,Georgia,serif;line-height:1.5;">主题参数速览</section><table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;"><tr><td style="padding:6px 8px;background-color:#f3f3f3;color:#cf4436;font-weight:600;font-size:13px;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">参数</td><td style="padding:6px 8px;background-color:#f3f3f3;color:#cf4436;font-weight:600;font-size:13px;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">作用</td><td style="padding:6px 8px;background-color:#f3f3f3;color:#cf4436;font-weight:600;font-size:13px;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">示例</td></tr><tr><td style="padding:6px 8px;font-size:13px;color:#4a4a45;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">text_size</td><td style="padding:6px 8px;font-size:13px;color:#4a4a45;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">阅读密度</td><td style="padding:6px 8px;font-size:13px;color:#4a4a45;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">15px</td></tr><tr><td style="padding:6px 8px;font-size:13px;color:#4a4a45;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">primary</td><td style="padding:6px 8px;font-size:13px;color:#4a4a45;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">链接点睛</td><td style="padding:6px 8px;font-size:13px;color:#4a4a45;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">#3370ff</td></tr><tr><td style="padding:6px 8px;font-size:13px;color:#4a4a45;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">line_height</td><td style="padding:6px 8px;font-size:13px;color:#4a4a45;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">呼吸感</td><td style="padding:6px 8px;font-size:13px;color:#4a4a45;border:1px solid rgba(120,120,112,0.18);text-align:left;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">1.9</td></tr></table><section style="margin:28px 0 12px 0;padding:0;font-size:19px;font-weight:700;color:#cf4436;font-family:'Noto Serif SC','Songti SC',STSong,Georgia,serif;line-height:1.5;">代码块与公式</section><section style=""><section style="margin:12px 0;padding:10px 12px;background-color:#f3f3f3;border-radius:4px;"><section style="margin:0;font-size:13px;line-height:1.6;font-family:Menlo,Monaco,Courier New,monospace;color:#4a4a45;word-wrap:break-word;">from lark2wechat import themes<br/>print(themes.list_themes())</section></section></section><section style="margin:0 0 12px 0;font-size:15px;line-height:1.9;color:#4a4a45;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',-apple-system,sans-serif;">（完）每个主题都在用不同的方式说同一句话：<strong style="color:#7c3aed;">内容第一</strong>。</section>
+</div>
+<script>
+function copyArticle(btn) {
+  var article = document.getElementById('article-content');
+  var range = document.createRange();
+  range.selectNodeContents(article);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  try {
+    navigator.clipboard.write([new ClipboardItem({
+      'text/html': new Blob([article.innerHTML], {type:'text/html'}),
+      'text/plain': new Blob([article.innerText], {type:'text/plain'})
+    })]).then(ok).catch(function() { document.execCommand('copy'); ok(); });
+  } catch(e) { document.execCommand('copy'); ok(); }
+  function ok() { btn.textContent='已复制!'; btn.style.backgroundColor='#34C759';
+    setTimeout(function() { btn.textContent='复制文章'; btn.style.backgroundColor='#576b95'; }, 2000); }
+  sel.removeAllRanges();
+}
+</script>
+</body>
+</html>

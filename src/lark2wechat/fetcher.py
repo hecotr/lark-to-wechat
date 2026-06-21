@@ -92,10 +92,25 @@ def export_whiteboard(token: str, output_dir: str = ".") -> str:
     lark-cli 按 content_type 自动加扩展名；返回实际保存路径（data.saved_path）。
     """
     out = _run_lark_cli(["docs", "+media-download", "--type", "whiteboard",
-                         "--token", token,
+                         "--token", token, "--overwrite",
                          "--output", os.path.join(output_dir, f"whiteboard_{token}")])
     data = json.loads(out)
     if not data.get("ok"):
         err = data.get("error", {})
         raise RuntimeError(f"画板导出失败（token={token}）：{err.get('message', err)}")
+    return data["data"]["saved_path"]
+
+
+def download_media(token: str, output_dir: str = ".") -> str:
+    """文档内图片 token → 本地图片文件路径（lark-cli docs +media-download）。
+
+    返回实际保存路径（data.saved_path）。
+    """
+    out = _run_lark_cli(["docs", "+media-download", "--type", "image",
+                         "--token", token, "--overwrite",
+                         "--output", os.path.join(output_dir, f"image_{token}")])
+    data = json.loads(out)
+    if not data.get("ok"):
+        err = data.get("error", {})
+        raise RuntimeError(f"图片下载失败（token={token}）：{err.get('message', err)}")
     return data["data"]["saved_path"]
