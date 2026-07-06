@@ -114,3 +114,24 @@ def download_media(token: str, output_dir: str = ".") -> str:
         err = data.get("error", {})
         raise RuntimeError(f"图片下载失败（token={token}）：{err.get('message', err)}")
     return data["data"]["saved_path"]
+
+
+def download_image_url(url: str, output_dir: str = ".") -> str:
+    """HTTP GET 下载远程图片（飞书 authcode URL 等）→ 本地文件路径。
+
+    lark-cli v2 markdown 导出的正文图片常以 ``![](authcode URL)`` 形式出现，
+    authcode 自带授权码可直接匿名 GET。文件名用 url 的 md5 去重（同一图多处引用只下载一次）。
+    """
+    import hashlib
+    import httpx
+    r = httpx.get(url, timeout=60, follow_redirects=True)
+    if r.status_code != 200:
+        raise RuntimeError(f"下载图片失败（HTTP {r.status_code}）：{url[:120]}")
+    ctype = r.headers.get("content-type", "")
+    ext = ".png" if "png" in ctype else ".jpg"
+    name = "img_" + hashlib.md5(url.encode()).hexdigest()[:12] + ext
+    os.makedirs(output_dir, exist_ok=True)
+    path = os.path.join(output_dir, name)
+    with open(path, "wb") as f:
+        f.write(r.content)
+    return path

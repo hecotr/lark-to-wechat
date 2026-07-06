@@ -39,6 +39,8 @@ def _precheck(body, title):
         raise RuntimeError("正文含未上传的图片占位（画板/图片导出失败）。检查 lark-cli 授权或重试。")
     if "lark2wechat://" in body:
         raise RuntimeError("正文含未替换的图片 src（上传失败）。")
+    if "internal-api-drive-stream.feishu.cn" in body:
+        raise RuntimeError("正文含未替换的飞书图片 URL（下载/上传失败）。检查网络或重试。")
 
 
 def _record(title, theme, media_id, updated=False):
@@ -103,7 +105,7 @@ def _resolve_cover(cover, auto_flag, title, style, assets):
 
 def publish(url, theme, cover, auto_cover, digest, dry_run, cfg, assets_dir=None, update_id=None):
     """端到端发布。返回 dict：dry_run 时含 html；否则含 media_id。"""
-    from .fetcher import fetch_document, export_whiteboard, download_media
+    from .fetcher import fetch_document, export_whiteboard, download_media, download_image_url
     from .parser import parse_feishu_markdown
     from . import renderer
     from .renderer import render_article_body, render_preview_page
@@ -148,6 +150,18 @@ def publish(url, theme, cover, auto_cover, digest, dry_run, cfg, assets_dir=None
                 placeholders[ph] = p
             except Exception:
                 pass  # 图片下载失败则保留占位块
+    # 标准 markdown ![](url) 形式的正文图片（如飞书 authcode URL）：无 token，直接下载 src
+    for b in blocks:
+        if b["type"] == "image" and not b.get("token") and b.get("src"):
+            src = b["src"]
+            if src in placeholders or not src.startswith(("http://", "https://")):
+                continue
+            try:
+                p = download_image_url(src, assets)
+                p = trim_whitespace(p)
+                placeholders[src] = p  # 用原始 src 作占位 key，复用下方 body.replace
+            except Exception:
+                pass  # 下载失败则 _precheck 拦截
 
     body = render_article_body(body_blocks, style)
     violations = validate_html(body)
